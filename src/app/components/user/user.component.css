@@ -1,0 +1,121 @@
+/* Ensure the main container allows scrolling */
+.dashboard-container {
+  display: flex;
+  height: 100vh; /* Full viewport height */
+  overflow: hidden; /* Prevent body overflow */
+}
+.p-dialog {
+  border-radius: 8px;
+}
+.p-dialog .p-field label {
+  font-weight: bold;
+}
+.p-dialog .p-button {
+  min-width: 100px;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #f4f4f4;
+  padding: 20px;
+  text-align: center;
+  overflow-y: auto; /* Enable scrolling for sidebar if needed */
+}
+
+.sidebar .menu li {
+  list-style: none;
+  padding: 15px;
+  cursor: pointer;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  background-color: #fff;
+  overflow-y: auto; /* Enable scrolling for the main content */
+}
+
+/* Ensure header layout remains responsive */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header-actions button {
+  margin-left: 10px;
+}
+
+/* User details layout */
+.user-details {
+  display: flex;
+  align-items: center;
+}
+
+.user-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.status-pill {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}
+
+.status-pill.active {
+  background-color: #28a745;
+}
+
+.status-pill.inactive {
+  background-color: #ffc107;
+}
+
+
+.status-pill-suspended {
+  background-color: #e55752 !important;
+  color: white !important;
+}
+
+
+
+
+p-dialog {
+  max-height: 80vh; 
+  overflow-y: auto; 
+}
+
+
+.p-field {
+  margin-bottom: 15px;
+}
+
+.p-field-radiobutton {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.p-field-radiobutton label {
+  margin-left: 5px;
+}
+
+.p-formgrid {
+  flex-wrap: wrap;
+}
+
+
+.p-formgrid .p-col {
+  flex: 1 0 30%; 
+  min-width: 120px; 
+}
+
+body, .dashboard-container, .main-content {
+  scroll-behavior: smooth;
+}

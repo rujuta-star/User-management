@@ -1,0 +1,120 @@
+<div class="dashboard-container">
+  <!-- Toolbar -->
+  <p-toolbar class="toolbar">
+    <div class="p-toolbar-group-left">
+      <p-button label="Add New User" icon="pi pi-plus" class="p-mr-2 p-button-success"
+        (click)="openAddUserDialog()"></p-button>
+    </div>
+    <div class="p-toolbar-group-right">
+      <p-button label="Logout" icon="pi pi-sign-out" class="p-button-danger" (click)="logout()"></p-button>
+    </div>
+  </p-toolbar>
+
+  <!-- Table -->
+  <p-table [value]="users" [paginator]="true" [rows]="7" [responsiveLayout]="'scroll'" class="user-table">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Sr.No</th>
+        <th>Name</th>
+        <th>Date Created</th>
+        <th>Role</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-user let-i="rowIndex">
+      <tr>
+        <td>{{ i + 1 }}</td>
+        <td>
+          <div class="user-info">
+            <img [src]="user.image" alt="{{ user.firstName }}" class="user-image" />
+            <span class="user-name">{{ user.firstName }} {{ user.lastName }}</span>
+          </div>
+        </td>
+        <td>{{ user.dateCreated | date: 'shortDate' }}</td>
+
+        <td>{{ user.role }}</td>
+        <td>
+          <span [ngClass]="{
+              'status-active': user.status === 'Active',
+              'status-inactive': user.status === 'Inactive',
+              'status-suspended': user.status === 'Suspended'
+            }" class="status">
+            {{ user.status }}
+          </span>
+        </td>
+        <span (click)="editUser(user)" class="action-emoji" title="Edit">✏️</span>
+        <span (click)="deleteUser(user.id)" class="action-emoji" title="Delete">🗑️</span>
+
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <!-- Dialog -->
+  <p-dialog [(visible)]="displayDialog" [header]="dialogHeader" [style]="{ width: '30vw' }" [modal]="true">
+    <form class="p-fluid">
+      <div class="p-field">
+        <label for="firstName">First Name</label>
+        <input id="firstName" type="text" pInputText [(ngModel)]="selectedUser.firstName" name="firstName" />
+      </div>
+      <div class="p-field">
+        <label for="lastName">Last Name</label>
+        <input id="lastName" type="text" pInputText [(ngModel)]="selectedUser.lastName" name="lastName" />
+      </div>
+      <div class="p-field">
+        <label for="role">Role</label>
+        <p-dropdown [options]="roles" [(ngModel)]="selectedUser.role" name="role"></p-dropdown>
+      </div>
+      <div class="p-field">
+        <label>Status</label>
+        <div class="p-d-flex p-ai-center">
+          <div class="p-field-radiobutton p-mr-3">
+            <p-radioButton name="status" value="Active" [(ngModel)]="selectedUser.status"
+              label="Active"></p-radioButton>
+          </div>
+          <div class="p-field-radiobutton p-mr-3">
+            <p-radioButton name="status" value="Inactive" [(ngModel)]="selectedUser.status"
+              label="Inactive"></p-radioButton>
+          </div>
+          <div class="p-field-radiobutton">
+            <p-radioButton name="status" value="Suspended" [(ngModel)]="selectedUser.status"
+              label="Suspended"></p-radioButton>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-field p-fluid">
+        <label for="image" class="p-sr-only">Profile Picture</label>
+        <input type="file" id="image" (change)="onImageChange($event)" class="p-inputtext p-component" />
+        <!-- <small class="p-text-muted">Accepted formats: jpg, png, jpeg (Max size: 2MB)</small> -->
+      </div>
+
+      <div class="p-field p-fluid">
+        <label for="dateCreated">Date Created</label>
+        <p-calendar 
+        id="dateCreated" 
+        [(ngModel)]="selectedUser.dateCreated" 
+        name="dateCreated" 
+        dateFormat="yy-mm-dd" 
+        [showIcon]="false" 
+        class="custom-calendar-input" 
+        appendTo="body" 
+        [showButtonBar]="false" 
+        inputId="date" 
+        styleClass="custom-date-input">
+      </p-calendar>
+     
+      </div>
+
+    </form>
+    <div class="p-d-flex p-jc-between p-mt-3">
+      <p-button label="Cancel" icon="pi pi-times" class="p-button-secondary p-button-sm cancel-btn"
+        (click)="cancel()"></p-button>
+      <p-button label="Save" icon="pi pi-check" class="p-button-success p-button-sm save-btn"
+        (click)="saveUser()"></p-button>
+    </div>
+
+
+  </p-dialog>
+
+</div>

@@ -1,0 +1,74 @@
+<button *ngIf="!displayDialog" pButton type="button" label="Add User" icon="pi pi-plus" class="p-button-success p-mt-3"
+  (click)="showAddDialog()"></button>
+<button *ngIf="!displayDialog" pButton type="button" label="Logout" icon="pi pi-sign-out" class="p-button-danger p-mt-3"
+  (click)="logout()"></button>
+
+<!-- Dialog Box for User Details -->
+<p-dialog header="User Details" [(visible)]="displayDialog" [style]="{ width: '30vw' }" [modal]="true"
+  [closable]="false">
+  <form class="p-fluid" (ngSubmit)="saveUser()">
+    <!-- First Name -->
+    <div class="p-field">
+      <label for="firstName">First Name</label>
+      <input id="firstName" type="text" pInputText [(ngModel)]="user.firstName" name="firstName" required />
+    </div>
+
+    <!-- Last Name -->
+    <div class="p-field">
+      <label for="lastName">Last Name</label>
+      <input id="lastName" type="text" pInputText [(ngModel)]="user.lastName" name="lastName" required />
+    </div>
+
+    <!-- Date Created -->
+    <div class="p-field">
+      <label for="dateCreated">Date Created</label>
+      <p-calendar id="dateCreated" [(ngModel)]="user.dateCreated" name="dateCreated" dateFormat="yy-mm-dd"></p-calendar>
+    </div>
+
+    <!-- Role Dropdown -->
+    <div class="p-field">
+      <label for="role">Role</label>
+      <p-dropdown [options]="roles" [(ngModel)]="user.role" name="role" placeholder="Select a Role"></p-dropdown>
+    </div>
+
+    <!-- Status Radio Buttons -->
+    <div class="p-field">
+      <label>Status</label>
+      <div class="p-formgrid p-grid">
+        <div class="p-field-radiobutton p-col">
+          <p-radioButton name="status" value="Active" [(ngModel)]="user.status" label="Active"></p-radioButton>
+        </div>
+        <div class="p-field-radiobutton p-col">
+          <p-radioButton name="status" value="Inactive" [(ngModel)]="user.status" label="Inactive"></p-radioButton>
+        </div>
+        <div class="p-field-radiobutton p-col">
+          <p-radioButton name="status" value="Suspended" [(ngModel)]="user.status" label="Suspended"></p-radioButton>
+        </div>
+      </div>
+    </div>
+
+    <!-- Status Pill -->
+    <div class="status-pill" [ngClass]="{
+    active: user.status === 'Active',
+    inactive: user.status === 'Inactive',
+    suspended: user.status === 'Suspended'
+  }">
+      {{ user.status }}
+    </div>
+
+
+
+    <!-- Profile Picture -->
+    <div class="p-field">
+      <label for="image">Profile Picture</label>
+      <input type="file" id="image" (change)="onImageChange($event)" />
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="p-d-flex p-jc-between p-mt-3">
+      <button pButton type="button" label="Cancel" icon="pi pi-times" class="p-button-secondary"
+        (click)="cancel()"></button>
+      <button pButton type="submit" label="Save" icon="pi pi-check" class="p-button-success"></button>
+    </div>
+  </form>
+</p-dialog>
